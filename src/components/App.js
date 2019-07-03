@@ -20,8 +20,11 @@ export const App = () => {
       <>
         <div className="square">
           <Square styleBlock={styleBlock} initialHeight={squareHeight} initialWidth={squareWidth} />
-          <div className="block block__plus block_plus-line" style={styleBlock} onClick={() => setHeight(squareHeight + 1)}> + </div>
-          <div className="block block__plus block_plus-column" style={styleBlock} onClick={() => setWidth(squareWidth + 1)}> + </div>
+          <div className="block block__orange block_plus-row" style={styleBlock} onClick={() => setHeight(squareHeight + 1)}>
+              <i className="fa fa-plus"/></div>
+          <div className="block block__orange block_plus-column" style={styleBlock} onClick={() => setWidth(squareWidth + 1)}>
+              <i className="fa fa-plus"/></div>
+          <div className="block block__red block_minus-column" style={styleBlock}> <i className="fa fa-minus"/> </div>
         </div>
       </>
     );

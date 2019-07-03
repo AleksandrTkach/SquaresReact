@@ -1,18 +1,15 @@
 import React from 'react';
 
 const cellSize = process.env.REACT_APP_CELL_SIZE;
-const styleBlock = {
-    height: `${cellSize}px`,
-    width: `${cellSize}px`,
-};
 
-
-export default function Block(props) {
+export default function Block({columnI, lineI, styleBlock}) {
 
         const _checkPosition = () => {
-            console.log(props);
+            console.log(columnI, lineI, styleBlock);
+            console.log('posCol: ' + columnI * cellSize)
+            console.log('posLine: ' + lineI * cellSize)
+
         };
 
-        return <div className="block block__default" style={styleBlock} onMouseOver={_checkPosition} />
-
+        return <div className="block block__blue" style={styleBlock} onMouseOver={_checkPosition} />
 }

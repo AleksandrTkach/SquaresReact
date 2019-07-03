@@ -1,10 +1,10 @@
 import React from 'react';
-import Line from './Line';
+import Row from './Row';
 
 export default function Square({styleBlock, initialHeight, initialWidth}) {
     const square = [];
     for (let i = 0; i < initialHeight; i++) {
-        square.push(<Line key={i} columnI={i} styleBlock={styleBlock} initialWidth={initialWidth} />);
+        square.push(<Row key={i} columnI={i} styleBlock={styleBlock} initialWidth={initialWidth} />);
     }
 
     return (
