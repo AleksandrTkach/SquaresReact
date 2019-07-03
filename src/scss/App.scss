@@ -1,0 +1,52 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.square {
+  position: relative;
+  display: inline-block;
+  border: 2px solid deepskyblue;
+
+  &__line {
+    display: flex;
+  }
+}
+
+.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+
+  &__default {
+    background-color: deepskyblue;
+  }
+  &__plus {
+    background-color: orange;
+    cursor: pointer;
+  }
+  &__minus {
+    background-color: darkred;
+    cursor: pointer;
+  }
+
+  &_plus-line {
+    position: absolute;
+    top: 101%;
+  }
+
+  &_plus-column {
+    position: absolute;
+    top: 0;
+    left: 101%;
+  }
+}
