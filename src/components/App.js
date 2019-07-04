@@ -51,56 +51,69 @@ export const App = () => {
         }
     };
 
+    let btnsPlus = (
+      <>
+        <div
+          onKeyPress={() => _changeSizeSquare('height', '+')}
+          role="button"
+          tabIndex="0"
+          className="block block__orange block_plus-row"
+          style={styleBlockSize}
+          onClick={() => _changeSizeSquare('height', '+')}
+        >
+          <i className="fa fa-plus" />
+          row
+        </div>
+        <div
+          onKeyPress={() => _changeSizeSquare('width', '+')}
+          role="button"
+          tabIndex="0"
+          className="block block__orange block_plus-column"
+          style={styleBlockSize}
+          onClick={() => _changeSizeSquare('width', '+')}
+        >
+          <i className="fa fa-plus" />
+          col
+        </div>
+      </>
+    );
+
+    let btnsMinus = (
+      <>
+        <div
+          onKeyPress={() => _changeSizeSquare('height', '-')}
+          role="button"
+          tabIndex="0"
+          className="block block__red block_minus-row"
+          style={{...styleBlockSize, ...styleBlockPositionRow}}
+          onClick={() => _changeSizeSquare('height', '-')}
+        >
+          <i className="fa fa-minus" />
+          row
+        </div>
+        <div
+          onKeyPress={() => _changeSizeSquare('width', '-')}
+          role="button"
+          tabIndex="0"
+          className="block block__red block_minus-column"
+          style={{...styleBlockSize, ...styleBlockPositionColumn}}
+          onClick={() => _changeSizeSquare('width', '-')}
+        >
+          <i className="fa fa-minus" />
+          col
+        </div>
+      </>
+    );
+
     return (
       <PositionBtnMinusContent.Provider value={{ positionBtnMinus, setPosition }}>
         <div className="square">
 
           <Square styleBlockSize={styleBlockSize} initialHeight={squareHeight} initialWidth={squareWidth} />
 
-          <div
-            onKeyPress={() => _changeSizeSquare('height', '+')}
-            role="button"
-            tabIndex="0"
-            className="block block__orange block_plus-row"
-            style={styleBlockSize}
-            onClick={() => _changeSizeSquare('height', '+')}
-          >
-            <i className="fa fa-plus" />
-            row
-          </div>
-          <div
-            onKeyPress={() => _changeSizeSquare('width', '+')}
-            role="button"
-            tabIndex="0"
-            className="block block__orange block_plus-column"
-            style={styleBlockSize}
-            onClick={() => _changeSizeSquare('width', '+')}
-          >
-            <i className="fa fa-plus" />
-            col
-          </div>
-          <div
-            onKeyPress={() => _changeSizeSquare('height', '-')}
-            role="button"
-            tabIndex="0"
-            className="block block__red block_minus-row"
-            style={{...styleBlockSize, ...styleBlockPositionRow}}
-            onClick={() => _changeSizeSquare('height', '-')}
-          >
-            <i className="fa fa-minus" />
-            row
-          </div>
-          <div
-            onKeyPress={() => _changeSizeSquare('width', '-')}
-            role="button"
-            tabIndex="0"
-            className="block block__red block_minus-column"
-            style={{...styleBlockSize, ...styleBlockPositionColumn}}
-            onClick={() => _changeSizeSquare('width', '-')}
-          >
-            <i className="fa fa-minus" />
-            col
-          </div>
+          {btnsPlus}
+          {btnsMinus}
+
         </div>
       </PositionBtnMinusContent.Provider>
     );
