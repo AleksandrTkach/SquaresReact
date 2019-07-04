@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from './Row';
 
-export default function Square({styleBlockSize, initialHeight, initialWidth}) {
+const Square = ({styleBlockSize, initialHeight, initialWidth}) => {
     const square = [];
     for (let i = 0; i < initialHeight; i++) {
         square.push(<Row key={i} iRow={i} styleBlockSize={styleBlockSize} initialWidth={initialWidth} />);
@@ -12,4 +12,6 @@ export default function Square({styleBlockSize, initialHeight, initialWidth}) {
         {square}
       </>
     )
-}
+};
+
+export default Square

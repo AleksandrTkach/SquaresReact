@@ -18,7 +18,7 @@ const defaultPositionBtnMinus = {
 
 export const PositionBtnMinusContent = React.createContext(defaultPositionBtnMinus);
 
-export const App = () => {
+const App = () => {
     const [positionBtnMinus, setPosition] = useState(defaultPositionBtnMinus);
     const [squareHeight, setHeight] = useState(INITIAL_HEIGHT);
     const [squareWidth, setWidth] = useState(INITIAL_WIDTH);
