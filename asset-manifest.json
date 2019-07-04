@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Geriana/static/css/main.99e8bc79.chunk.css",
-    "main.js": "/Geriana/static/js/main.85c20374.chunk.js",
-    "main.js.map": "/Geriana/static/js/main.85c20374.chunk.js.map",
-    "runtime~main.js": "/Geriana/static/js/runtime~main.c594e038.js",
-    "runtime~main.js.map": "/Geriana/static/js/runtime~main.c594e038.js.map",
-    "static/js/2.91120321.chunk.js": "/Geriana/static/js/2.91120321.chunk.js",
-    "static/js/2.91120321.chunk.js.map": "/Geriana/static/js/2.91120321.chunk.js.map",
-    "index.html": "/Geriana/index.html",
-    "precache-manifest.cb9d9101751339ff5f61c6b53d8dd599.js": "/Geriana/precache-manifest.cb9d9101751339ff5f61c6b53d8dd599.js",
-    "service-worker.js": "/Geriana/service-worker.js",
-    "static/css/main.99e8bc79.chunk.css.map": "/Geriana/static/css/main.99e8bc79.chunk.css.map"
+    "main.css": "/SquaresReact/static/css/main.99e8bc79.chunk.css",
+    "main.js": "/SquaresReact/static/js/main.c60e04e6.chunk.js",
+    "main.js.map": "/SquaresReact/static/js/main.c60e04e6.chunk.js.map",
+    "runtime~main.js": "/SquaresReact/static/js/runtime~main.c34cb903.js",
+    "runtime~main.js.map": "/SquaresReact/static/js/runtime~main.c34cb903.js.map",
+    "static/js/2.91120321.chunk.js": "/SquaresReact/static/js/2.91120321.chunk.js",
+    "static/js/2.91120321.chunk.js.map": "/SquaresReact/static/js/2.91120321.chunk.js.map",
+    "index.html": "/SquaresReact/index.html",
+    "precache-manifest.f87261123f318fb79799daa977247648.js": "/SquaresReact/precache-manifest.f87261123f318fb79799daa977247648.js",
+    "service-worker.js": "/SquaresReact/service-worker.js",
+    "static/css/main.99e8bc79.chunk.css.map": "/SquaresReact/static/css/main.99e8bc79.chunk.css.map"
   }
 }
