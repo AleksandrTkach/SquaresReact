@@ -12,3 +12,6 @@ $ npm run build
 ```
 $ npm run start
 ```
+
+
+[GitHub Pages]( https://aleksandrtkach.github.io/SquaresReact/)
