@@ -1,4 +1,5 @@
-@import "variables/Variables";
+$padding-size: 2px;
+$margin-btn: 2px;
 
 html,
 body {
@@ -11,85 +12,85 @@ body {
 }
 
 .square {
+  display: flex;
+  flex-direction: column;
   position: relative;
-  display: inline-block;
   border: 2px solid deepskyblue;
+}
+
+.row {
+  display: flex;
+}
+
+.tiles__wrapper {
+  position: relative;
   padding: $padding-size 0 0 $padding-size;
 
-  &__line {
-    display: flex;
-  }
-
-  &:hover .block_minus-row {
+  &:hover .tile_minus-row {
     visibility: visible;
     opacity: 1;
   }
 
-  &:hover .block_minus-column {
+  &:hover .tile_minus-col {
     visibility: visible;
     opacity: 1;
   }
 }
 
-.block {
+.tile {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
 
-  &__blue {
+  &_blue {
     background-color: deepskyblue;
     border-bottom: $padding-size solid white;
     border-right: $padding-size solid white;
   }
-  &__orange {
+  &_orange {
     background-color: orange;
     cursor: pointer;
   }
-  &__red {
+  &_red {
     background-color: darkred;
     cursor: pointer;
   }
 
   &_plus {
-    &-column,
+    &-col,
     &-row {
       position: absolute;
     }
-    &-column {
-      top: 100%;
-      margin-top: $padding-size + 2;
-    }
     &-row {
+      top: 100%;
+      margin-top: $padding-size + $margin-btn;
+    }
+    &-col {
       top: 2px;
       left: 100%;
-      margin-left: $padding-size + 2;
+      margin-left: $padding-size + $margin-btn;
     }
   }
 
   &_minus {
-    &-column,
+    &-col,
     &-row {
       visibility: hidden;
       opacity: 0;
       position: absolute;
       transition: .5s;
     }
-
-    &-column {
-      bottom: 100%;
-      margin-bottom: $padding-size + 2;
-      border-left: $padding-size solid white;
-      border-right: $padding-size solid white;
-    }
-
     &-row {
+      bottom: 100%;
+      margin-bottom: $padding-size + $margin-btn;
+      margin-left: $padding-size
+    }
+    &-col {
       right: 100%;
-      margin-right: $padding-size + 2;
-      z-index: -1;
-      border-top: $padding-size solid white;
-      border-bottom: $padding-size solid white;
+      margin-right: $padding-size + $margin-btn;
+      margin-top: $padding-size;
     }
   }
 }
