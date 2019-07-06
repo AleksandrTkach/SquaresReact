@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/SquaresReact/static/css/main.99e8bc79.chunk.css",
-    "main.js": "/SquaresReact/static/js/main.c60e04e6.chunk.js",
-    "main.js.map": "/SquaresReact/static/js/main.c60e04e6.chunk.js.map",
+    "main.css": "/SquaresReact/static/css/main.b9727ea4.chunk.css",
+    "main.js": "/SquaresReact/static/js/main.90ae6dca.chunk.js",
+    "main.js.map": "/SquaresReact/static/js/main.90ae6dca.chunk.js.map",
     "runtime~main.js": "/SquaresReact/static/js/runtime~main.c34cb903.js",
     "runtime~main.js.map": "/SquaresReact/static/js/runtime~main.c34cb903.js.map",
-    "static/js/2.91120321.chunk.js": "/SquaresReact/static/js/2.91120321.chunk.js",
-    "static/js/2.91120321.chunk.js.map": "/SquaresReact/static/js/2.91120321.chunk.js.map",
+    "static/js/2.4a914921.chunk.js": "/SquaresReact/static/js/2.4a914921.chunk.js",
+    "static/js/2.4a914921.chunk.js.map": "/SquaresReact/static/js/2.4a914921.chunk.js.map",
     "index.html": "/SquaresReact/index.html",
-    "precache-manifest.f87261123f318fb79799daa977247648.js": "/SquaresReact/precache-manifest.f87261123f318fb79799daa977247648.js",
+    "precache-manifest.1020eeef974e63f09686803a00ea4fe5.js": "/SquaresReact/precache-manifest.1020eeef974e63f09686803a00ea4fe5.js",
     "service-worker.js": "/SquaresReact/service-worker.js",
-    "static/css/main.99e8bc79.chunk.css.map": "/SquaresReact/static/css/main.99e8bc79.chunk.css.map"
+    "static/css/main.b9727ea4.chunk.css.map": "/SquaresReact/static/css/main.b9727ea4.chunk.css.map"
   }
 }
