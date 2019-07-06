@@ -1,7 +1,6 @@
 ### Install dependencies
 ```
 $ npm install # Or $ yarn install
-$ cp .env.example .env
 ```
 
 ### Setup file .env 
