@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "65bc6690bf924b3b776d4d2577dc1d57",
+    "revision": "6ac05ddf1a58d2708524d9e7c49b9505",
     "url": "/SquaresReact/index.html"
   },
   {
-    "revision": "f4179b75dab7ffd4d4f1",
+    "revision": "bad8a2f9e763b65737a5",
     "url": "/SquaresReact/static/css/main.b9727ea4.chunk.css"
   },
   {
-    "revision": "10c95e8605f18490ee42",
-    "url": "/SquaresReact/static/js/2.4a914921.chunk.js"
+    "revision": "f6b3163a6cb09a516ed1",
+    "url": "/SquaresReact/static/js/2.8e43f333.chunk.js"
   },
   {
-    "revision": "f4179b75dab7ffd4d4f1",
-    "url": "/SquaresReact/static/js/main.90ae6dca.chunk.js"
+    "revision": "bad8a2f9e763b65737a5",
+    "url": "/SquaresReact/static/js/main.81cd729b.chunk.js"
   },
   {
     "revision": "e357ed3dff83e69b491f",
