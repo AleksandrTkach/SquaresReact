@@ -62,7 +62,6 @@ export default class Square extends Component {
 			cellSize={CELL_SIZE}
 			row={row}
 			col={col}
-			paddingSize={PADDING_SIZE}
 			checkPosition={this.checkPosition}
 		/>
 	);
@@ -105,30 +104,55 @@ export default class Square extends Component {
 	};
 
 	_removeCol = () => {
-		const { iCol, initialWidth } = this.state;
-		let square = [...this.state.square];
+		const promise = new Promise((resolve, reject) => {
+			try {
+				const { iCol, initialWidth } = this.state;
+				let square = [...this.state.square];
 
-		square.map(row => row.tiles.filter((tile, index) => index !== iCol));
+				square.map(row => row.tiles.filter((tile, index) => index !== iCol));
 
-		this.setState({
-			...this.state,
-			square,
-			initialWidth: initialWidth - 1,
+				this.setState({
+					...this.state,
+					square,
+					initialWidth: initialWidth - 1,
+				});
+				return resolve(true);
+			} catch (e) {
+				return reject(new Error('removeCol'));
+			}
 		});
 
-		setTimeout(() => this._buildSquare(), 1);
+		// promise.then(() => this._buildSquare(), (e) => console.log('error:', e));
+		this._rebuildSquare(promise);
 	};
 
 	_removeRow = () => {
-		const { square, iRow, initialHeight } = this.state;
+		const promise = new Promise((resolve, reject) => {
+			try {
+				const { square, iRow, initialHeight } = this.state;
 
-		this.setState({
-			...this.state,
-			square: square.filter((row, index) => index !== iRow),
-			initialHeight: initialHeight - 1,
+				this.setState({
+					...this.state,
+					square: square.filter((row, index) => index !== iRow),
+					initialHeight: initialHeight - 1,
+				});
+				return resolve(true);
+			} catch (e) {
+				return reject(new Error('removeRow'));
+			}
 		});
 
-		setTimeout(() => this._buildSquare(), 1);
+		// promise.then(() => this._buildSquare(), (e) => console.log('error:', e));
+		this._rebuildSquare(promise);
+	};
+
+	_rebuildSquare = async promise => {
+		try {
+			await promise;
+			this._buildSquare();
+		} catch (e) {
+			console.log('error:', e);
+		}
 	};
 
 	render() {
@@ -142,6 +166,7 @@ export default class Square extends Component {
 					onClick={this._removeCol}
 					posCol={posCol}
 					posRow={posRow}
+					paddingSize={PADDING_SIZE}
 				/>
 			) : (
 				''
@@ -154,6 +179,7 @@ export default class Square extends Component {
 					onClick={this._removeRow}
 					posCol={posCol}
 					posRow={posRow}
+					paddingSize={PADDING_SIZE}
 				/>
 			) : (
 				''
@@ -172,7 +198,12 @@ export default class Square extends Component {
 					{btnRemoveRow}
 				</div>
 
-				<Btn cellSize={CELL_SIZE} type="plus-row" onClick={this._addRow} />
+				<Btn
+					cellSize={CELL_SIZE}
+					type="plus-row"
+					onClick={this._addRow}
+					paddingSize={PADDING_SIZE}
+				/>
 				<Btn cellSize={CELL_SIZE} type="plus-col" onClick={this._addCol} />
 			</div>
 		);

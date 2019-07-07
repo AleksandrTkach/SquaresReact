@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Btn extends React.Component {
 	render() {
-		const { cellSize, type, onClick, posRow, posCol } = this.props;
+		const { cellSize, type, onClick, posRow, posCol, paddingSize } = this.props;
 
 		const styleSize = {
 			height: `${cellSize}px`,
@@ -22,6 +22,9 @@ export default class Btn extends React.Component {
 			case 'plus-row':
 				classNameDiv = 'tile_orange tile_plus-row';
 				classNameIcon = 'plus';
+				stylePosition = {
+					marginLeft: `${paddingSize}px`,
+				};
 				break;
 			case 'minus-col':
 				classNameDiv = 'tile_red tile_minus-col';
@@ -59,6 +62,7 @@ Btn.propTypes = {
 	cellSize: PropTypes.number.isRequired,
 	type: PropTypes.string.isRequired,
 	onClick: PropTypes.func.isRequired,
+	paddingSize: PropTypes.number,
 	posRow: PropTypes.number,
 	posCol: PropTypes.number,
 };
