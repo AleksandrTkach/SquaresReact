@@ -11,16 +11,18 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
-
 importScripts(
-  "/SquaresReact/precache-manifest.e643b7dc42c4bef5e29e0bc826d974f3.js"
+	'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
 );
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+importScripts(
+	'/SquaresReact/precache-manifest.8ec98fd693994d6344cbc0b13ac74aa1.js'
+);
+
+self.addEventListener('message', event => {
+	if (event.data && event.data.type === 'SKIP_WAITING') {
+		self.skipWaiting();
+	}
 });
 
 workbox.core.clientsClaim();
@@ -33,7 +35,9 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/SquaresReact/index.html"), {
-  
-  blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
-});
+workbox.routing.registerNavigationRoute(
+	workbox.precaching.getCacheKeyForURL('/SquaresReact/index.html'),
+	{
+		blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/],
+	}
+);
