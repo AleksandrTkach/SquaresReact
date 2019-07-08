@@ -69,37 +69,34 @@ export default class Square extends Component {
 		});
 	};
 
-	/**
-	 * Set params for tile
-	 *
-	 * @param row
-	 * @param col
-	 * @param cellSize
-	 * @returns {*}
-	 * @private
-	 */
-	_setTile = (row, col, cellSize = this.state.cellSize) => (
-		<Tile
-			key={`${row}-${col}`}
-			cellSize={cellSize}
-			row={row}
-			col={col}
-			checkPosition={this.checkPosition}
-		/>
-	);
+	// /**
+	//  * Set params for tile
+	//  *
+	//  * @param row
+	//  * @param col
+	//  * @param cellSize
+	//  * @returns {*}
+	//  * @private
+	//  */
+	// _setTile = (row, col, cellSize = this.state.cellSize) => (
+	// 	<Tile
+	// 		key={`${row}-${col}`}
+	// 		cellSize={cellSize}
+	// 		row={row}
+	// 		col={col}
+	// 		checkPosition={this.checkPosition}
+	// 	/>
+	// );
 
 	/**
 	 *
 	 * @private
 	 */
 	_addCol = () => {
-		const { squareWidth: col } = this.state;
-		let square = [...this.state.square];
+		const iTile = this.state.square[0].length;
 
-		square.map((row, index) => {
-			row.tiles.push(this._setTile(index, col));
-			return row;
-		});
+		let square = [...this.state.square];
+		square.map(row => row.push(iTile));
 
 		this.setState({
 			square,
@@ -111,18 +108,16 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_addRow = () => {
-		const { squareHeight: row, squareWidth } = this.state;
+		const iRow = this.state.square.length;
+		const squareWidth = this.state.square[0].length;
 
 		let square = [...this.state.square];
-		let tiles = [];
+		let row = [];
 
-		for (let col = 0; col < squareWidth; col++) {
-			tiles.push(this._setTile(row, col));
+		for (let iCol = 0; iCol < squareWidth; iCol++) {
+			row.push(iCol);
 		}
-
-		square[row] = {
-			tiles,
-		};
+		square[iRow] = row;
 
 		this.setState({
 			square,
