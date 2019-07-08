@@ -82,12 +82,12 @@ body {
       position: absolute;
       transition: .5s;
     }
-    &-row {
+    &-col {
       bottom: 100%;
       margin-bottom: $padding-size + $margin-btn;
       margin-left: $padding-size
     }
-    &-col {
+    &-row {
       right: 100%;
       margin-right: $padding-size + $margin-btn;
       margin-top: $padding-size;

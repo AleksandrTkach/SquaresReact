@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Btn extends React.Component {
-	_getValues = (type, paddingSize, posRow, posCol) => {
+	_getValues = (type, posRow, posCol, paddingSize) => {
 		let classNameDiv;
 		let classNameIcon;
 		let stylePosition;
@@ -19,15 +19,15 @@ export default class Btn extends React.Component {
 					marginLeft: `${paddingSize}px`,
 				};
 				break;
-			case 'minus-col':
-				classNameDiv = 'tile_red tile_minus-col';
+			case 'minus-row':
+				classNameDiv = 'tile_red tile_minus-row';
 				classNameIcon = 'minus';
 				stylePosition = {
 					top: `${posRow}px`,
 				};
 				break;
-			case 'minus-row':
-				classNameDiv = 'tile_red tile_minus-row';
+			case 'minus-col':
+				classNameDiv = 'tile_red tile_minus-col';
 				classNameIcon = 'minus';
 				stylePosition = {
 					left: `${posCol}px`,
