@@ -12,13 +12,16 @@ export default class Square extends Component {
 
 		this.state = {
 			square: [],
-			squareHeight: initialHeight,
-			squareWidth: initialWidth,
+			initialHeight: initialHeight,
+			initialWidth: initialWidth,
 			cellSize,
 			posCol: 0,
 			posRow: 0,
 			iCol: 0,
 			iRow: 0,
+			counter: 0,
+			isShowBtnMinusCol: true,
+			isShowBtnMinusRow: true,
 		};
 	}
 
@@ -53,108 +56,90 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_buildSquare = () => {
+		const { initialHeight, initialWidth } = this.state;
+
 		let square = [];
-		const { squareHeight, squareWidth } = this.state;
+		let counter = 0;
 
-		for (let row = 0; row < squareHeight; row++) {
+		for (let row = 0; row < initialHeight; row++) {
 			let tiles = [];
-			for (let col = 0; col < squareWidth; col++) {
-				tiles.push(col);
+
+			for (let col = 0; col < initialWidth; col++) {
+				tiles[col] = {
+					id: counter++,
+				};
 			}
-			square[row] = tiles;
+			square[row] = {
+				id: counter++,
+				tiles: tiles,
+			};
 		}
 
 		this.setState({
 			square,
+			counter,
 		});
 	};
 
-	// /**
-	//  * Set params for tile
-	//  *
-	//  * @param row
-	//  * @param col
-	//  * @param cellSize
-	//  * @returns {*}
-	//  * @private
-	//  */
-	// _setTile = (row, col, cellSize = this.state.cellSize) => (
-	// 	<Tile
-	// 		key={`${row}-${col}`}
-	// 		cellSize={cellSize}
-	// 		row={row}
-	// 		col={col}
-	// 		checkPosition={this.checkPosition}
-	// 	/>
-	// );
-
-	/**
-	 *
-	 * @private
-	 */
 	_addCol = () => {
-		const iTile = this.state.square[0].length;
-
+		let { counter } = this.state;
 		let square = [...this.state.square];
-		square.map(row => row.push(iTile));
+
+		square.map(row => row.tiles.push({ id: counter++ }));
 
 		this.setState({
 			square,
+			counter,
 		});
 	};
 
-	/**
-	 *
-	 * @private
-	 */
 	_addRow = () => {
-		const iRow = this.state.square.length;
-		const squareWidth = this.state.square[0].length;
-
 		let square = [...this.state.square];
-		let row = [];
+		let { counter } = this.state;
+		const squareWidth = square[0].tiles.length;
 
-		for (let iCol = 0; iCol < squareWidth; iCol++) {
-			row.push(iCol);
+		let tiles = [];
+		for (let col = 0; col < squareWidth; col++) {
+			tiles.push({ id: counter++ });
 		}
-		square[iRow] = row;
+
+		square.push({
+			id: counter++,
+			tiles: tiles,
+		});
 
 		this.setState({
 			square,
+			counter,
 		});
 	};
 
-	/**
-	 *
-	 * @returns {Promise<void>}
-	 * @private
-	 */
-	_removeCol = async () => {
+	_removeCol = () => {
+		const square = [...this.state.square];
 		const { iCol } = this.state;
-		let square = [...this.state.square];
+		const cols = square[0].tiles.length;
 
-		square.map(row => row.tiles.filter((tile, index) => index !== iCol));
+		if (cols > 1) {
+			square.map(row => row.tiles.splice(iCol, 1));
 
-		await this.setState({
-			square,
-		});
-
-		this._buildSquare();
+			this.setState({
+				square,
+			});
+		}
 	};
 
-	/**
-	 *
-	 * @returns {Promise<void>}
-	 * @private
-	 */
 	_removeRow = async () => {
-		const { square, iRow } = this.state;
+		const square = [...this.state.square];
+		const { iRow } = this.state;
+		const rows = square.length;
 
-		await this.setState({
-			square: square.filter((row, index) => index !== iRow),
-		});
+		if (rows > 1) {
+			square.splice(iRow, 1);
 
-		this._buildSquare();
+			this.setState({
+				square,
+			});
+		}
 	};
 
 	render() {
@@ -162,49 +147,44 @@ export default class Square extends Component {
 			square,
 			posCol,
 			posRow,
-			squareWidth,
-			squareHeight,
+			initialWidth,
+			initialHeight,
 			cellSize,
 		} = this.state;
 
-		const btnRemoveCol =
-			squareWidth > 1 ? (
-				<Btn
-					cellSize={cellSize}
-					type="minus-row"
-					onClick={this._removeRow}
-					posCol={posCol}
-					posRow={posRow}
-					paddingSize={PADDING_SIZE}
-				/>
-			) : (
-				''
-			);
-		const btnRemoveRow =
-			squareHeight > 1 ? (
-				<Btn
-					cellSize={cellSize}
-					type="minus-col"
-					onClick={this._removeCol}
-					posCol={posCol}
-					posRow={posRow}
-					paddingSize={PADDING_SIZE}
-				/>
-			) : (
-				''
-			);
+		const btnRemoveCol = initialWidth > 1 && (
+			<Btn
+				cellSize={cellSize}
+				type="minus-row"
+				onClick={this._removeRow}
+				posCol={posCol}
+				posRow={posRow}
+				paddingSize={PADDING_SIZE}
+			/>
+		);
+
+		const btnRemoveRow = initialHeight > 1 && (
+			<Btn
+				cellSize={cellSize}
+				type="minus-col"
+				onClick={this._removeCol}
+				posCol={posCol}
+				posRow={posRow}
+				paddingSize={PADDING_SIZE}
+			/>
+		);
 
 		return (
 			<div className="square">
 				<div className="tiles__wrapper">
 					{square.map((row, iRow) => (
-						<div key={`row-${iRow}`} className="row">
-							{row.map((tile, iCol) => (
+						<div key={`row-${row.id}`} className="row">
+							{row.tiles.map((tile, iCol) => (
 								<Tile
-									key={`${iRow}-${iCol}`}
+									key={`${tile.id}`}
 									cellSize={cellSize}
-									row={iRow}
-									col={iCol}
+									iRow={iRow}
+									iCol={iCol}
 									checkPosition={this.checkPosition}
 								/>
 							))}
