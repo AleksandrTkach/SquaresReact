@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Btn extends React.Component {
-	render() {
-		const { cellSize, type, onClick, posRow, posCol, paddingSize } = this.props;
-
-		const styleSize = {
-			height: `${cellSize}px`,
-			width: `${cellSize}px`,
-		};
-
+	_getValues = (type, paddingSize, posRow, posCol) => {
 		let classNameDiv;
 		let classNameIcon;
 		let stylePosition;
@@ -45,6 +38,28 @@ export default class Btn extends React.Component {
 				classNameIcon = '';
 				stylePosition = '';
 		}
+
+		return {
+			classNameDiv,
+			classNameIcon,
+			stylePosition,
+		};
+	};
+
+	render() {
+		const { cellSize, type, onClick, posRow, posCol, paddingSize } = this.props;
+
+		const styleSize = {
+			height: `${cellSize}px`,
+			width: `${cellSize}px`,
+		};
+
+		const { classNameDiv, stylePosition, classNameIcon } = this._getValues(
+			type,
+			posRow,
+			posCol,
+			paddingSize
+		);
 
 		return (
 			<div
