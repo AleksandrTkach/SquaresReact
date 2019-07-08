@@ -26,6 +26,12 @@ export default class Square extends Component {
 		this._buildSquare();
 	}
 
+	/**
+	 * Check position btns minus
+	 *
+	 * @param iRow
+	 * @param iCol
+	 */
 	checkPosition = (iRow = this.setState.iRow, iCol = this.setState.iCol) => {
 		this.setState({
 			...this.state,
@@ -36,6 +42,11 @@ export default class Square extends Component {
 		});
 	};
 
+	/**
+	 * Build square
+	 *
+	 * @private
+	 */
 	_buildSquare = () => {
 		let square = [];
 		const { initialHeight, initialWidth } = this.state;
@@ -56,6 +67,14 @@ export default class Square extends Component {
 		});
 	};
 
+	/**
+	 * Set params for tile
+	 *
+	 * @param row
+	 * @param col
+	 * @returns {*}
+	 * @private
+	 */
 	_setTile = (row, col) => (
 		<Tile
 			key={`${row}-${col}`}
@@ -66,6 +85,10 @@ export default class Square extends Component {
 		/>
 	);
 
+	/**
+	 *
+	 * @private
+	 */
 	_addCol = () => {
 		const { initialWidth: col } = this.state;
 		let square = [...this.state.square];
@@ -82,6 +105,10 @@ export default class Square extends Component {
 		});
 	};
 
+	/**
+	 *
+	 * @private
+	 */
 	_addRow = () => {
 		const { initialHeight: row, initialWidth } = this.state;
 
@@ -103,56 +130,41 @@ export default class Square extends Component {
 		});
 	};
 
-	_removeCol = () => {
-		const promise = new Promise((resolve, reject) => {
-			try {
-				const { iCol, initialWidth } = this.state;
-				let square = [...this.state.square];
+	/**
+	 *
+	 * @returns {Promise<void>}
+	 * @private
+	 */
+	_removeCol = async () => {
+		const { iCol, initialWidth } = this.state;
+		let square = [...this.state.square];
 
-				square.map(row => row.tiles.filter((tile, index) => index !== iCol));
+		square.map(row => row.tiles.filter((tile, index) => index !== iCol));
 
-				this.setState({
-					...this.state,
-					square,
-					initialWidth: initialWidth - 1,
-				});
-				return resolve(true);
-			} catch (e) {
-				return reject(new Error('removeCol'));
-			}
+		await this.setState({
+			...this.state,
+			square,
+			initialWidth: initialWidth - 1,
 		});
 
-		// promise.then(() => this._buildSquare(), (e) => console.log('error:', e));
-		this._rebuildSquare(promise);
+		this._buildSquare();
 	};
 
-	_removeRow = () => {
-		const promise = new Promise((resolve, reject) => {
-			try {
-				const { square, iRow, initialHeight } = this.state;
+	/**
+	 *
+	 * @returns {Promise<void>}
+	 * @private
+	 */
+	_removeRow = async () => {
+		const { square, iRow, initialHeight } = this.state;
 
-				this.setState({
-					...this.state,
-					square: square.filter((row, index) => index !== iRow),
-					initialHeight: initialHeight - 1,
-				});
-				return resolve(true);
-			} catch (e) {
-				return reject(new Error('removeRow'));
-			}
+		await this.setState({
+			...this.state,
+			square: square.filter((row, index) => index !== iRow),
+			initialHeight: initialHeight - 1,
 		});
 
-		// promise.then(() => this._buildSquare(), (e) => console.log('error:', e));
-		this._rebuildSquare(promise);
-	};
-
-	_rebuildSquare = async promise => {
-		try {
-			await promise;
-			this._buildSquare();
-		} catch (e) {
-			console.log('error:', e);
-		}
+		this._buildSquare();
 	};
 
 	render() {
