@@ -38,8 +38,8 @@ export default class Square extends Component {
 		iCol = this.state.iCol,
 		cellSize = this.state.cellSize
 	) => {
+		console.log(iRow, ' : ', iCol);
 		this.setState({
-			...this.state,
 			posCol: cellSize * iCol + PADDING_SIZE * iCol,
 			posRow: cellSize * iRow + PADDING_SIZE * iRow,
 			iCol,
@@ -59,15 +59,12 @@ export default class Square extends Component {
 		for (let row = 0; row < squareHeight; row++) {
 			let tiles = [];
 			for (let col = 0; col < squareWidth; col++) {
-				tiles.push(this._setTile(row, col));
+				tiles.push(col);
 			}
-			square[row] = {
-				tiles,
-			};
+			square[row] = tiles;
 		}
 
 		this.setState({
-			...this.state,
 			square,
 		});
 	};
@@ -105,9 +102,7 @@ export default class Square extends Component {
 		});
 
 		this.setState({
-			...this.state,
 			square,
-			squareWidth: col + 1,
 		});
 	};
 
@@ -130,9 +125,7 @@ export default class Square extends Component {
 		};
 
 		this.setState({
-			...this.state,
 			square,
-			squareHeight: row + 1,
 		});
 	};
 
@@ -142,15 +135,13 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_removeCol = async () => {
-		const { iCol, squareWidth } = this.state;
+		const { iCol } = this.state;
 		let square = [...this.state.square];
 
 		square.map(row => row.tiles.filter((tile, index) => index !== iCol));
 
 		await this.setState({
-			...this.state,
 			square,
-			squareWidth: squareWidth - 1,
 		});
 
 		this._buildSquare();
@@ -162,12 +153,10 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_removeRow = async () => {
-		const { square, iRow, squareHeight } = this.state;
+		const { square, iRow } = this.state;
 
 		await this.setState({
-			...this.state,
 			square: square.filter((row, index) => index !== iRow),
-			squareHeight: squareHeight - 1,
 		});
 
 		this._buildSquare();
@@ -188,7 +177,7 @@ export default class Square extends Component {
 				<Btn
 					cellSize={cellSize}
 					type="minus-row"
-					onClick={this._removeCol}
+					onClick={this._removeRow}
 					posCol={posCol}
 					posRow={posRow}
 					paddingSize={PADDING_SIZE}
@@ -201,7 +190,7 @@ export default class Square extends Component {
 				<Btn
 					cellSize={cellSize}
 					type="minus-col"
-					onClick={this._removeRow}
+					onClick={this._removeCol}
 					posCol={posCol}
 					posRow={posRow}
 					paddingSize={PADDING_SIZE}
@@ -213,9 +202,17 @@ export default class Square extends Component {
 		return (
 			<div className="square">
 				<div className="tiles__wrapper">
-					{square.map((row, index) => (
-						<div key={`row-${index}`} className="row">
-							{row.tiles.map(tile => tile)}
+					{square.map((row, iRow) => (
+						<div key={`row-${iRow}`} className="row">
+							{row.map((tile, iCol) => (
+								<Tile
+									key={`${iRow}-${iCol}`}
+									cellSize={cellSize}
+									row={iRow}
+									col={iCol}
+									checkPosition={this.checkPosition}
+								/>
+							))}
 						</div>
 					))}
 
