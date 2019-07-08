@@ -20,6 +20,8 @@ export default class Square extends Component {
 			iCol: 0,
 			iRow: 0,
 			counter: 0,
+			isShowBtnMinusCol: true,
+			isShowBtnMinusRow: true,
 		};
 	}
 
@@ -72,76 +74,72 @@ export default class Square extends Component {
 				tiles: tiles,
 			};
 		}
-		console.log('square: ', square);
+
 		this.setState({
 			square,
+			counter,
 		});
 	};
 
-	_setTile = (row, col, cellSize = this.state.cellSize) => (
-		<Tile
-			key={`${row}-${col}`}
-			cellSize={cellSize}
-			row={row}
-			col={col}
-			checkPosition={this.checkPosition}
-		/>
-	);
-
 	_addCol = () => {
-		const { initialWidth: col } = this.state;
+		let { counter } = this.state;
 		let square = [...this.state.square];
 
-		square.map((row, index) => {
-			row.tiles.push(this._setTile(index, col));
-			return row;
-		});
+		square.map(row => row.tiles.push({ id: counter++ }));
 
 		this.setState({
 			square,
+			counter,
 		});
 	};
 
 	_addRow = () => {
-		const { initialHeight: row, initialWidth } = this.state;
-
 		let square = [...this.state.square];
-		let tiles = [];
+		let { counter } = this.state;
+		const squareWidth = square[0].tiles.length;
 
-		for (let col = 0; col < initialWidth; col++) {
-			tiles.push(this._setTile(row, col));
+		let tiles = [];
+		for (let col = 0; col < squareWidth; col++) {
+			tiles.push({ id: counter++ });
 		}
 
-		square[row] = {
-			tiles,
-		};
+		square.push({
+			id: counter++,
+			tiles: tiles,
+		});
 
 		this.setState({
 			square,
+			counter,
 		});
 	};
 
-	_removeCol = async () => {
+	_removeCol = () => {
+		const square = [...this.state.square];
 		const { iCol } = this.state;
-		let square = [...this.state.square];
+		const cols = square[0].tiles.length;
 
-		square.map(row => row.tiles.filter((tile, index) => index !== iCol));
+		if (cols > 1) {
+			square.map(row => row.tiles.splice(iCol, 1));
 
-		await this.setState({
-			square,
-		});
-
-		this._buildSquare();
+			this.setState({
+				square,
+			});
+		}
 	};
 
 	_removeRow = async () => {
-		const { square, iRow } = this.state;
+		const square = [...this.state.square];
+		const { iRow } = this.state;
+		const rows = square.length;
 
-		await this.setState({
-			square: square.filter((row, index) => index !== iRow),
-		});
+		if (rows > 1) {
+			square.splice(iRow, 1);
 
-		this._buildSquare();
+			this.setState({
+				square,
+			});
+		}
 	};
 
 	render() {
@@ -154,32 +152,27 @@ export default class Square extends Component {
 			cellSize,
 		} = this.state;
 
-		const btnRemoveCol =
-			initialWidth > 1 ? (
-				<Btn
-					cellSize={cellSize}
-					type="minus-row"
-					onClick={this._removeRow}
-					posCol={posCol}
-					posRow={posRow}
-					paddingSize={PADDING_SIZE}
-				/>
-			) : (
-				''
-			);
-		const btnRemoveRow =
-			initialHeight > 1 ? (
-				<Btn
-					cellSize={cellSize}
-					type="minus-col"
-					onClick={this._removeCol}
-					posCol={posCol}
-					posRow={posRow}
-					paddingSize={PADDING_SIZE}
-				/>
-			) : (
-				''
-			);
+		const btnRemoveCol = initialWidth > 1 && (
+			<Btn
+				cellSize={cellSize}
+				type="minus-row"
+				onClick={this._removeRow}
+				posCol={posCol}
+				posRow={posRow}
+				paddingSize={PADDING_SIZE}
+			/>
+		);
+
+		const btnRemoveRow = initialHeight > 1 && (
+			<Btn
+				cellSize={cellSize}
+				type="minus-col"
+				onClick={this._removeCol}
+				posCol={posCol}
+				posRow={posRow}
+				paddingSize={PADDING_SIZE}
+			/>
+		);
 
 		return (
 			<div className="square">
