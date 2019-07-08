@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import Tile from './Tile';
 import Btn from './Btn';
 
-const INITIAL_HEIGHT = Number(process.env.REACT_APP_INITIAL_HEIGHT);
-const INITIAL_WIDTH = Number(process.env.REACT_APP_INITIAL_WIDTH);
-const CELL_SIZE = Number(process.env.REACT_APP_CELL_SIZE);
 const PADDING_SIZE = Number(process.env.REACT_APP_PADDING_SIZE);
 
 export default class Square extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+
+		const { initialHeight, initialWidth, cellSize } = this.props;
 
 		this.state = {
 			square: [],
-			initialHeight: INITIAL_HEIGHT,
-			initialWidth: INITIAL_WIDTH,
+			squareHeight: initialHeight,
+			squareWidth: initialWidth,
+			cellSize,
 			posCol: 0,
 			posRow: 0,
 			iCol: 0,
@@ -31,12 +31,17 @@ export default class Square extends Component {
 	 *
 	 * @param iRow
 	 * @param iCol
+	 * @param cellSize
 	 */
-	checkPosition = (iRow = this.setState.iRow, iCol = this.setState.iCol) => {
+	checkPosition = (
+		iRow = this.state.iRow,
+		iCol = this.state.iCol,
+		cellSize = this.state.cellSize
+	) => {
 		this.setState({
 			...this.state,
-			posCol: CELL_SIZE * iCol + PADDING_SIZE * iCol,
-			posRow: CELL_SIZE * iRow + PADDING_SIZE * iRow,
+			posCol: cellSize * iCol + PADDING_SIZE * iCol,
+			posRow: cellSize * iRow + PADDING_SIZE * iRow,
 			iCol,
 			iRow,
 		});
@@ -49,11 +54,11 @@ export default class Square extends Component {
 	 */
 	_buildSquare = () => {
 		let square = [];
-		const { initialHeight, initialWidth } = this.state;
+		const { squareHeight, squareWidth } = this.state;
 
-		for (let row = 0; row < initialHeight; row++) {
+		for (let row = 0; row < squareHeight; row++) {
 			let tiles = [];
-			for (let col = 0; col < initialWidth; col++) {
+			for (let col = 0; col < squareWidth; col++) {
 				tiles.push(this._setTile(row, col));
 			}
 			square[row] = {
@@ -72,13 +77,14 @@ export default class Square extends Component {
 	 *
 	 * @param row
 	 * @param col
+	 * @param cellSize
 	 * @returns {*}
 	 * @private
 	 */
-	_setTile = (row, col) => (
+	_setTile = (row, col, cellSize = this.state.cellSize) => (
 		<Tile
 			key={`${row}-${col}`}
-			cellSize={CELL_SIZE}
+			cellSize={cellSize}
 			row={row}
 			col={col}
 			checkPosition={this.checkPosition}
@@ -90,7 +96,7 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_addCol = () => {
-		const { initialWidth: col } = this.state;
+		const { squareWidth: col } = this.state;
 		let square = [...this.state.square];
 
 		square.map((row, index) => {
@@ -101,7 +107,7 @@ export default class Square extends Component {
 		this.setState({
 			...this.state,
 			square,
-			initialWidth: col + 1,
+			squareWidth: col + 1,
 		});
 	};
 
@@ -110,12 +116,12 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_addRow = () => {
-		const { initialHeight: row, initialWidth } = this.state;
+		const { squareHeight: row, squareWidth } = this.state;
 
 		let square = [...this.state.square];
 		let tiles = [];
 
-		for (let col = 0; col < initialWidth; col++) {
+		for (let col = 0; col < squareWidth; col++) {
 			tiles.push(this._setTile(row, col));
 		}
 
@@ -126,7 +132,7 @@ export default class Square extends Component {
 		this.setState({
 			...this.state,
 			square,
-			initialHeight: row + 1,
+			squareHeight: row + 1,
 		});
 	};
 
@@ -136,7 +142,7 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_removeCol = async () => {
-		const { iCol, initialWidth } = this.state;
+		const { iCol, squareWidth } = this.state;
 		let square = [...this.state.square];
 
 		square.map(row => row.tiles.filter((tile, index) => index !== iCol));
@@ -144,7 +150,7 @@ export default class Square extends Component {
 		await this.setState({
 			...this.state,
 			square,
-			initialWidth: initialWidth - 1,
+			squareWidth: squareWidth - 1,
 		});
 
 		this._buildSquare();
@@ -156,24 +162,31 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_removeRow = async () => {
-		const { square, iRow, initialHeight } = this.state;
+		const { square, iRow, squareHeight } = this.state;
 
 		await this.setState({
 			...this.state,
 			square: square.filter((row, index) => index !== iRow),
-			initialHeight: initialHeight - 1,
+			squareHeight: squareHeight - 1,
 		});
 
 		this._buildSquare();
 	};
 
 	render() {
-		const { square, posCol, posRow, initialWidth, initialHeight } = this.state;
+		const {
+			square,
+			posCol,
+			posRow,
+			squareWidth,
+			squareHeight,
+			cellSize,
+		} = this.state;
 
 		const btnRemoveCol =
-			initialWidth > 1 ? (
+			squareWidth > 1 ? (
 				<Btn
-					cellSize={CELL_SIZE}
+					cellSize={cellSize}
 					type="minus-row"
 					onClick={this._removeCol}
 					posCol={posCol}
@@ -184,9 +197,9 @@ export default class Square extends Component {
 				''
 			);
 		const btnRemoveRow =
-			initialHeight > 1 ? (
+			squareHeight > 1 ? (
 				<Btn
-					cellSize={CELL_SIZE}
+					cellSize={cellSize}
 					type="minus-col"
 					onClick={this._removeRow}
 					posCol={posCol}
@@ -211,12 +224,12 @@ export default class Square extends Component {
 				</div>
 
 				<Btn
-					cellSize={CELL_SIZE}
+					cellSize={cellSize}
 					type="plus-row"
 					onClick={this._addRow}
 					paddingSize={PADDING_SIZE}
 				/>
-				<Btn cellSize={CELL_SIZE} type="plus-col" onClick={this._addCol} />
+				<Btn cellSize={cellSize} type="plus-col" onClick={this._addCol} />
 			</div>
 		);
 	}
