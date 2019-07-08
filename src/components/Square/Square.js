@@ -12,14 +12,14 @@ export default class Square extends Component {
 
 		this.state = {
 			square: [],
-			initialHeight: initialHeight,
-			initialWidth: initialWidth,
+			initialHeight,
+			initialWidth,
 			cellSize,
-			posCol: 0,
-			posRow: 0,
-			iCol: 0,
-			iRow: 0,
-			counter: 0,
+			posBtnMinusCol: 0,
+			posBtnMinusRow: 0,
+			indexCol: 0,
+			indexRow: 0,
+			uniqueKey: 0,
 			isShowBtnMinusCol: true,
 			isShowBtnMinusRow: true,
 		};
@@ -32,21 +32,32 @@ export default class Square extends Component {
 	/**
 	 * Check position btns minus
 	 *
-	 * @param iRow
-	 * @param iCol
+	 * @param indexRow
+	 * @param indexCol
 	 * @param cellSize
 	 */
 	checkPosition = (
-		iRow = this.state.iRow,
-		iCol = this.state.iCol,
+		indexRow = this.state.indexRow,
+		indexCol = this.state.indexCol,
 		cellSize = this.state.cellSize
 	) => {
-		console.log(iRow, ' : ', iCol);
+		const squareHeight = this.state.square.length - 1;
+		if (squareHeight < indexRow) {
+			indexRow = squareHeight;
+		}
+
+		const squareWidth = this.state.square[0].tiles.length - 1;
+		if (squareWidth < indexCol) {
+			indexCol = squareWidth;
+		}
+
 		this.setState({
-			posCol: cellSize * iCol + PADDING_SIZE * iCol,
-			posRow: cellSize * iRow + PADDING_SIZE * iRow,
-			iCol,
-			iRow,
+			posBtnMinusCol: cellSize * indexCol + PADDING_SIZE * indexCol,
+			posBtnMinusRow: cellSize * indexRow + PADDING_SIZE * indexRow,
+			indexCol,
+			indexRow,
+			isShowBtnMinusCol: squareWidth > 0,
+			isShowBtnMinusRow: squareHeight > 0,
 		});
 	};
 
@@ -59,150 +70,177 @@ export default class Square extends Component {
 		const { initialHeight, initialWidth } = this.state;
 
 		let square = [];
-		let counter = 0;
+		let uniqueKey = 0;
 
 		for (let row = 0; row < initialHeight; row++) {
 			let tiles = [];
 
 			for (let col = 0; col < initialWidth; col++) {
 				tiles[col] = {
-					id: counter++,
+					id: uniqueKey++,
 				};
 			}
 			square[row] = {
-				id: counter++,
+				id: uniqueKey++,
 				tiles: tiles,
 			};
 		}
 
 		this.setState({
 			square,
-			counter,
+			uniqueKey,
 		});
 	};
 
+	/**
+	 *
+	 * @private
+	 */
 	_addCol = () => {
-		let { counter } = this.state;
+		let { uniqueKey } = this.state;
 		let square = [...this.state.square];
 
-		square.map(row => row.tiles.push({ id: counter++ }));
+		square.map(row => row.tiles.push({ id: uniqueKey++ }));
 
 		this.setState({
 			square,
-			counter,
+			uniqueKey,
 		});
 	};
 
+	/**
+	 *
+	 * @private
+	 */
 	_addRow = () => {
 		let square = [...this.state.square];
-		let { counter } = this.state;
+		let { uniqueKey } = this.state;
 		const squareWidth = square[0].tiles.length;
 
 		let tiles = [];
 		for (let col = 0; col < squareWidth; col++) {
-			tiles.push({ id: counter++ });
+			tiles.push({ id: uniqueKey++ });
 		}
 
 		square.push({
-			id: counter++,
+			id: uniqueKey++,
 			tiles: tiles,
 		});
 
 		this.setState({
 			square,
-			counter,
+			uniqueKey,
 		});
 	};
 
-	_removeCol = () => {
+	/**
+	 *
+	 * @private
+	 */
+	_removeCol = async () => {
 		const square = [...this.state.square];
-		const { iCol } = this.state;
+		const { indexCol } = this.state;
 		const cols = square[0].tiles.length;
 
 		if (cols > 1) {
-			square.map(row => row.tiles.splice(iCol, 1));
+			square.map(row => row.tiles.splice(indexCol, 1));
 
-			this.setState({
+			await this.setState({
 				square,
 			});
+
+			this.checkPosition();
 		}
 	};
 
+	/**
+	 *
+	 * @private
+	 */
 	_removeRow = async () => {
 		const square = [...this.state.square];
-		const { iRow } = this.state;
+		const { indexRow } = this.state;
 		const rows = square.length;
 
 		if (rows > 1) {
-			square.splice(iRow, 1);
+			square.splice(indexRow, 1);
 
-			this.setState({
+			await this.setState({
 				square,
 			});
+
+			this.checkPosition();
 		}
 	};
 
 	render() {
 		const {
 			square,
-			posCol,
-			posRow,
-			initialWidth,
-			initialHeight,
+			posBtnMinusCol,
+			posBtnMinusRow,
 			cellSize,
+			isShowBtnMinusCol,
+			isShowBtnMinusRow,
 		} = this.state;
 
-		const btnRemoveCol = initialWidth > 1 && (
-			<Btn
-				cellSize={cellSize}
-				type="minus-row"
-				onClick={this._removeRow}
-				posCol={posCol}
-				posRow={posRow}
-				paddingSize={PADDING_SIZE}
-			/>
-		);
-
-		const btnRemoveRow = initialHeight > 1 && (
-			<Btn
-				cellSize={cellSize}
-				type="minus-col"
-				onClick={this._removeCol}
-				posCol={posCol}
-				posRow={posRow}
-				paddingSize={PADDING_SIZE}
-			/>
-		);
+		const styleSquare = {
+			margin: `${cellSize + PADDING_SIZE}px`,
+		};
 
 		return (
-			<div className="square">
+			<div className="square" style={styleSquare}>
 				<div className="tiles__wrapper">
-					{square.map((row, iRow) => (
+					{square.map((row, indexRow) => (
 						<div key={`row-${row.id}`} className="row">
-							{row.tiles.map((tile, iCol) => (
+							{row.tiles.map((tile, indexCol) => (
 								<Tile
-									key={`${tile.id}`}
+									key={`tile-${tile.id}`}
 									cellSize={cellSize}
-									iRow={iRow}
-									iCol={iCol}
+									indexRow={indexRow}
+									indexCol={indexCol}
 									checkPosition={this.checkPosition}
 								/>
 							))}
 						</div>
 					))}
 
-					{btnRemoveCol}
-					{btnRemoveRow}
+					{isShowBtnMinusRow && (
+						<Btn
+							cellSize={cellSize}
+							type="minus-row"
+							actionOnClick={this._removeRow}
+							posBtnMinusCol={posBtnMinusCol}
+							posBtnMinusRow={posBtnMinusRow}
+							paddingSize={PADDING_SIZE}
+						/>
+					)}
+
+					{isShowBtnMinusCol && (
+						<Btn
+							cellSize={cellSize}
+							type="minus-col"
+							actionOnClick={this._removeCol}
+							posBtnMinusCol={posBtnMinusCol}
+							posBtnMinusRow={posBtnMinusRow}
+							paddingSize={PADDING_SIZE}
+						/>
+					)}
 				</div>
 
 				<Btn
 					cellSize={cellSize}
 					type="plus-row"
-					onClick={this._addRow}
+					actionOnClick={this._addRow}
 					paddingSize={PADDING_SIZE}
 				/>
-				<Btn cellSize={cellSize} type="plus-col" onClick={this._addCol} />
+				<Btn cellSize={cellSize} type="plus-col" actionOnClick={this._addCol} />
 			</div>
 		);
 	}
 }
+
+Square.defaultProps = {
+	cellSize: 50,
+	initialHeight: 4,
+	initialWidth: 4,
+};

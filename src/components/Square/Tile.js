@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class Tile extends React.Component {
 	render() {
-		const { cellSize, checkPosition, iRow, iCol } = this.props;
+		const { cellSize, checkPosition, indexRow, indexCol } = this.props;
 
 		const style = {
 			height: `${cellSize}px`,
@@ -14,7 +14,7 @@ export default class Tile extends React.Component {
 			<div
 				className="tile tile_blue"
 				style={style}
-				onMouseOver={() => checkPosition(iRow, iCol)}
+				onMouseOver={() => checkPosition(indexRow, indexCol)}
 			/>
 		);
 	}
@@ -22,6 +22,6 @@ export default class Tile extends React.Component {
 
 Tile.propTypes = {
 	cellSize: PropTypes.number.isRequired,
-	iRow: PropTypes.number.isRequired,
-	iCol: PropTypes.number.isRequired,
+	indexRow: PropTypes.number.isRequired,
+	indexCol: PropTypes.number.isRequired,
 };

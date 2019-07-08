@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Btn extends React.Component {
-	_getValues = (type, posRow, posCol, paddingSize) => {
+	_getValues = (type, posBtnMinusRow, posBtnMinusCol, paddingSize) => {
 		let classNameDiv;
 		let classNameIcon;
 		let stylePosition;
@@ -23,14 +23,14 @@ export default class Btn extends React.Component {
 				classNameDiv = 'tile_red tile_minus-row';
 				classNameIcon = 'minus';
 				stylePosition = {
-					top: `${posRow}px`,
+					top: `${posBtnMinusRow}px`,
 				};
 				break;
 			case 'minus-col':
 				classNameDiv = 'tile_red tile_minus-col';
 				classNameIcon = 'minus';
 				stylePosition = {
-					left: `${posCol}px`,
+					left: `${posBtnMinusCol}px`,
 				};
 				break;
 			default:
@@ -47,7 +47,14 @@ export default class Btn extends React.Component {
 	};
 
 	render() {
-		const { cellSize, type, onClick, posRow, posCol, paddingSize } = this.props;
+		const {
+			cellSize,
+			type,
+			actionOnClick,
+			posBtnMinusRow,
+			posBtnMinusCol,
+			paddingSize,
+		} = this.props;
 
 		const styleSize = {
 			height: `${cellSize}px`,
@@ -56,8 +63,8 @@ export default class Btn extends React.Component {
 
 		const { classNameDiv, stylePosition, classNameIcon } = this._getValues(
 			type,
-			posRow,
-			posCol,
+			posBtnMinusRow,
+			posBtnMinusCol,
 			paddingSize
 		);
 
@@ -65,7 +72,7 @@ export default class Btn extends React.Component {
 			<div
 				className={`tile ${classNameDiv}`}
 				style={{ ...styleSize, ...stylePosition }}
-				onClick={onClick}
+				onClick={actionOnClick}
 			>
 				<i className={`fa fa-${classNameIcon}`} />
 			</div>
@@ -76,8 +83,8 @@ export default class Btn extends React.Component {
 Btn.propTypes = {
 	cellSize: PropTypes.number.isRequired,
 	type: PropTypes.string.isRequired,
-	onClick: PropTypes.func.isRequired,
+	actionOnClick: PropTypes.func.isRequired,
 	paddingSize: PropTypes.number,
-	posRow: PropTypes.number,
-	posCol: PropTypes.number,
+	posBtnMinusRow: PropTypes.number,
+	posBtnMinusCol: PropTypes.number,
 };
