@@ -8,13 +8,8 @@ export default class Square extends Component {
 	constructor(props) {
 		super(props);
 
-		const { initialHeight, initialWidth, cellSize } = this.props;
-
 		this.state = {
 			square: [],
-			initialHeight,
-			initialWidth,
-			cellSize,
 			posBtnMinusCol: 0,
 			posBtnMinusRow: 0,
 			indexCol: 0,
@@ -39,7 +34,7 @@ export default class Square extends Component {
 	checkPosition = (
 		indexRow = this.state.indexRow,
 		indexCol = this.state.indexCol,
-		cellSize = this.state.cellSize
+		cellSize = this.props.cellSize
 	) => {
 		const squareHeight = this.state.square.length - 1;
 		if (squareHeight < indexRow) {
@@ -67,15 +62,13 @@ export default class Square extends Component {
 	 * @private
 	 */
 	_buildSquare = () => {
-		const { initialHeight, initialWidth } = this.state;
-
 		let square = [];
 		let uniqueKey = 0;
 
-		for (let row = 0; row < initialHeight; row++) {
+		for (let row = 0; row < this.props.initialHeight; row++) {
 			let tiles = [];
 
-			for (let col = 0; col < initialWidth; col++) {
+			for (let col = 0; col < this.props.initialWidth; col++) {
 				tiles[col] = {
 					id: uniqueKey++,
 				};
@@ -178,10 +171,11 @@ export default class Square extends Component {
 			square,
 			posBtnMinusCol,
 			posBtnMinusRow,
-			cellSize,
 			isShowBtnMinusCol,
 			isShowBtnMinusRow,
 		} = this.state;
+
+		const { cellSize } = this.props;
 
 		const styleSquare = {
 			margin: `${cellSize + PADDING_SIZE}px`,
