@@ -70,6 +70,7 @@ export default class Btn extends React.Component {
 
 		return (
 			<div
+				id={`btn-${type}`}
 				className={`tile ${classNameDiv}`}
 				style={{ ...styleSize, ...stylePosition }}
 				onClick={actionOnClick}

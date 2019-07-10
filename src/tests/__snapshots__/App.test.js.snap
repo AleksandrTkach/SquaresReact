@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render App 1`] = `
+<Square
+  cellSize={50}
+  initialHeight={4}
+  initialWidth={4}
+/>
+`;
+
+exports[`Render Square 1`] = `
+<div
+  className="square"
+  style={
+    Object {
+      "margin": "52px",
+    }
+  }
+>
+  <div
+    className="tiles__wrapper"
+  >
+    <div
+      className="row"
+      key="row-4"
+    >
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={0}
+        indexRow={0}
+        key="tile-0"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={1}
+        indexRow={0}
+        key="tile-1"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={2}
+        indexRow={0}
+        key="tile-2"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={3}
+        indexRow={0}
+        key="tile-3"
+      />
+    </div>
+    <div
+      className="row"
+      key="row-9"
+    >
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={0}
+        indexRow={1}
+        key="tile-5"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={1}
+        indexRow={1}
+        key="tile-6"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={2}
+        indexRow={1}
+        key="tile-7"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={3}
+        indexRow={1}
+        key="tile-8"
+      />
+    </div>
+    <div
+      className="row"
+      key="row-14"
+    >
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={0}
+        indexRow={2}
+        key="tile-10"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={1}
+        indexRow={2}
+        key="tile-11"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={2}
+        indexRow={2}
+        key="tile-12"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={3}
+        indexRow={2}
+        key="tile-13"
+      />
+    </div>
+    <div
+      className="row"
+      key="row-19"
+    >
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={0}
+        indexRow={3}
+        key="tile-15"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={1}
+        indexRow={3}
+        key="tile-16"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={2}
+        indexRow={3}
+        key="tile-17"
+      />
+      <Tile
+        cellSize={50}
+        checkPosition={[Function]}
+        indexCol={3}
+        indexRow={3}
+        key="tile-18"
+      />
+    </div>
+    <Btn
+      actionOnClick={[Function]}
+      cellSize={50}
+      paddingSize={2}
+      posBtnMinusCol={0}
+      posBtnMinusRow={0}
+      type="minus-row"
+    />
+    <Btn
+      actionOnClick={[Function]}
+      cellSize={50}
+      paddingSize={2}
+      posBtnMinusCol={0}
+      posBtnMinusRow={0}
+      type="minus-col"
+    />
+  </div>
+  <Btn
+    actionOnClick={[Function]}
+    cellSize={50}
+    paddingSize={2}
+    type="plus-row"
+  />
+  <Btn
+    actionOnClick={[Function]}
+    cellSize={50}
+    type="plus-col"
+  />
+</div>
+`;
+
+exports[`Render Tile 1`] = `
+<div
+  className="tile tile_blue"
+  onMouseOver={[Function]}
+  style={
+    Object {
+      "height": "50px",
+      "width": "50px",
+    }
+  }
+/>
+`;
