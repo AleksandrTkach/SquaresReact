@@ -35,21 +35,18 @@ describe('Square', () => {
 		const squareHeight = currentHeight();
 		SquareMount.find('#btn-plus-row').simulate('click');
 		expect(SquareMount.find('.row')).toHaveLength(squareHeight + 1);
-
 	});
 
 	it('plusCol', () => {
 		const squareWidth = currentWidth();
 		SquareMount.find('#btn-plus-col').simulate('click');
 		expect(SquareMount.find('.row').at(0).find(Tile)).toHaveLength(squareWidth + 1);
-
 	});
 
 	it('minusRow', () => {
 		const squareHeight = currentHeight();
 		SquareMount.find('#btn-minus-row').simulate('click');
 		expect(SquareMount.find('.row')).toHaveLength(squareHeight - 1);
-
 	});
 
 	it('minusCol', () => {
@@ -62,13 +59,11 @@ describe('Square', () => {
 		const SquareMount = mount(<Square initialHeight={1} initialWidth={1} cellSize={1}/>);
 		SquareMount.find('#btn-minus-row').simulate('click');
 		expect(SquareMount.find('.row')).toHaveLength(1);
-
 	});
 
 	it('lastColNotRemoved', () => {
 		const SquareMount = mount(<Square initialHeight={1} initialWidth={1} cellSize={1}/>);
 		SquareMount.find('#btn-minus-col').simulate('click');
 		expect(SquareMount.find('.row').at(0).find(Tile)).toHaveLength(1);
-
 	});
 });
