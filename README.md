@@ -17,4 +17,10 @@ $ npm run build
 ```
 $ npm run start
 ```
+
+### Run test
+```
+$ npm run test
+```
+
 [GitHub Pages](https://aleksandrtkach.github.io/SquaresReact/)
